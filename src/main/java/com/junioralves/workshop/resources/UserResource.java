@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -28,7 +29,11 @@ public class UserResource { // Controlador Rest Acessa o Serviço
 		
 	}
 	
-	
-	
-
+	@GetMapping (value= "/{id}") // Metodo Get
+	public ResponseEntity<UserDTO> findById(@PathVariable String id ){ //PathVariable > Id casa com id recebido na url
+		List <User> list = service.findAll(); // Busca os usuarios e guarda na lista
+		User obj = service.findById(id); // Instanciando o objeto usuario recebendo o service ( User service )
+		return ResponseEntity.ok().body(new UserDTO(obj)); //Conversao do User Para User DTO
+		
+	}
 }
