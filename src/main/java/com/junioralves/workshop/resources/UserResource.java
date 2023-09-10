@@ -1,6 +1,7 @@
 package com.junioralves.workshop.resources;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.junioralves.workshop.domain.User;
+import com.junioralves.workshop.dto.UserDTO;
 import com.junioralves.workshop.services.UserService;
 
 @RestController  // Recurso Rest
@@ -19,9 +21,10 @@ public class UserResource { // Controlador Rest Acessa o Serviço
 	private UserService service; // O Serviço Acessa o Repositorio
 	
 	@GetMapping // Metodo Get
-	public ResponseEntity<List<User>> findAll(){ //Encapsular a estrutura para retornar resposta http com possiveis erros
+	public ResponseEntity<List<UserDTO>> findAll(){ //Encapsular a estrutura para retornar resposta http com possiveis erros
 		List <User> list = service.findAll(); // Busca os usuarios e guarda na lista 
-		return ResponseEntity.ok().body(list); // Retornando o corpo de cadastro
+		List<UserDTO>listDto =list.stream().map (x -> new UserDTO(x)).collect(Collectors.toList()); // Conversao da lista original para o DTO
+		return ResponseEntity.ok().body(listDto); // Retornando o corpo de cadastro do listDTO
 		
 	}
 	
