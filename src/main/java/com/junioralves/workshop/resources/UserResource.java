@@ -24,7 +24,7 @@ public class UserResource { // Controlador Rest Acessa o Serviço
 	public ResponseEntity<List<UserDTO>> findAll(){ //Encapsular a estrutura para retornar resposta http com possiveis erros
 		List <User> list = service.findAll(); // Busca os usuarios e guarda na lista 
 		List<UserDTO>listDto =list.stream().map (x -> new UserDTO(x)).collect(Collectors.toList()); // Conversao da lista original para o DTO
-		return ResponseEntity.ok().body(listDto); // Retornando o corpo de cadastro do listDTO
+		return ResponseEntity.ok().body(listDto); //  Retornando o corpo de cadastro do listDTO
 		
 	}
 	
