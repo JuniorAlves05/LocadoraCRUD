@@ -34,8 +34,21 @@ public class UserService {
         User user = findById(id);
         repo.delete(user);
     }
+    
+    public User update(User obj) {
+        User newObj = repo.findById(obj.getId()).orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));
+        updateData(newObj, obj); // Responsável por copiar os dados de obj para newObj
+        return repo.save(newObj);
+    }
 
-    public User fromDTO(UserDTO objDto) {
+
+    private void updateData(User newObj, User obj) {
+			newObj.setName(obj.getName());
+			newObj.setEmail(obj.getEmail());
+		
+	}
+
+	public User fromDTO(UserDTO objDto) {
         return new User(null, objDto.getName(), objDto.getEmail());
     }
 }

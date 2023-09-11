@@ -58,5 +58,14 @@ public class UserResource { // Controlador Rest Acessa o Serviço
 		service.delete(id);
 		return ResponseEntity.noContent().build(); // Resposta com codigo 204 ( noContent )
 	}
+	
+	@RequestMapping (value="/{id}", method=RequestMethod.PUT) // Metodo para Atualizacao
+	public ResponseEntity<Void> update  (@RequestBody UserDTO objDto,@PathVariable String id) { 
+	    User obj = service.fromDTO(objDto); // Instanciar o obj a partir do objDto que vai vim na requisição
+	    obj.setId(id);
+	    obj = service.update(obj);
+	    return ResponseEntity.noContent().build(); // Resposta com codigo 204 ( noContent )
+	}
 		
+	
 }
