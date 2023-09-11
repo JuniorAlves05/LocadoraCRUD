@@ -2,8 +2,10 @@ package com.junioralves.workshop.services;
 
 import java.util.List;
 import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.junioralves.workshop.domain.User;
 import com.junioralves.workshop.dto.UserDTO;
 import com.junioralves.workshop.repository.UserRepository;
@@ -26,6 +28,11 @@ public class UserService {
 
     public User insert(User obj) {
         return repo.insert(obj);
+    }
+    
+    public void delete(String id) {
+        User user = findById(id);
+        repo.delete(user);
     }
 
     public User fromDTO(UserDTO objDto) {

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -51,6 +52,11 @@ public class UserResource { // Controlador Rest Acessa o Serviço
 	        .toUri();
 	    return ResponseEntity.created(uri).build(); // Resposta vazia com o codigo 201, e a localização com o novo recurso criado
 	}
-
+	
+	@RequestMapping(value="/{id}", method=RequestMethod.DELETE) // Metodo para deletar
+	public ResponseEntity<Void>delete(@PathVariable String id){ 
+		service.delete(id);
+		return ResponseEntity.noContent().build(); // Resposta com codigo 204 ( noContent )
+	}
 		
 }
