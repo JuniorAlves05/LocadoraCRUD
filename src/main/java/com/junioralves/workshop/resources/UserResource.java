@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.junioralves.workshop.domain.Post;
 import com.junioralves.workshop.domain.User;
 import com.junioralves.workshop.dto.UserDTO;
 import com.junioralves.workshop.services.UserService;
@@ -67,5 +68,11 @@ public class UserResource { // Controlador Rest Acessa o Serviço
 	    return ResponseEntity.noContent().build(); // Resposta com codigo 204 ( noContent )
 	}
 		
+	@GetMapping (value= "/{id}/posts") // Metodo Get
+	public ResponseEntity<List<Post>> findPosts(@PathVariable String id ){ //PathVariable > Id casa com id recebido na url
+		List <User> list = service.findAll(); // Busca os usuarios e guarda na lista
+		User obj = service.findById(id); // Instanciando o objeto usuario recebendo o service ( User service )
+		return ResponseEntity.ok().body(obj.getPosts());
+	}
 	
 }
