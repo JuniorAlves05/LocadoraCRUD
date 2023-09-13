@@ -7,9 +7,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.junioralves.workshop.domain.Post;
+import com.junioralves.workshop.resources.util.URL;
 import com.junioralves.workshop.services.PostService;
 
 @RestController // Recurso Rest
@@ -29,5 +31,13 @@ public class PostResource { // Controlador Rest Acessa o Serviço
     public ResponseEntity<List<Post>> findAll() {
         List<Post> list = service.findAll(); // Busca todos os posts e guarda na lista
         return ResponseEntity.ok().body(list); // Conversão da lista de posts para ResponseEntity
+    }
+    
+    @GetMapping(value = "/titlesearch") // Método Get
+    public ResponseEntity<List<Post>> findByTitle (@RequestParam (value ="text", defaultValue ="")String text) {
+    	text = URL.decodeParam(text); // Decodifica o texto
+    	List<Post> list = service.findByTitle(text);
+    	return ResponseEntity.ok().body(list);
+    	
     }
 }

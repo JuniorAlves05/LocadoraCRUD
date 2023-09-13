@@ -1,12 +1,12 @@
 package com.junioralves.workshop.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.junioralves.workshop.domain.Post;
-import com.junioralves.workshop.domain.User;
 import com.junioralves.workshop.repository.PostRepository;
 import com.junioralves.workshop.services.exception.ObjectNotFoundException;
 
@@ -17,9 +17,15 @@ public class PostService {
     private PostRepository repo;
 
     public Post findById(String id) {
-        Optional<Post> optionalUser = repo.findById(id);
-        return optionalUser.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));
+        Optional<Post> optionalPost = repo.findById(id);
+        return optionalPost.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));
     }
 
-  
+    public List<Post> findByTitle(String text) {
+        return repo.findByTitleContainingIgnoreCase(text);
+    }
+
+    public List<Post> findAll() {
+        return repo.findAll();
+    }
 }
