@@ -19,12 +19,12 @@ public class Instantiation implements CommandLineRunner { // Serve para informar
 	public void run(String... args) throws Exception {
 
 	
-	cadastroRepository.deleteAll(); // Serve para limpar a coleção no mongodb
+	//cadastroRepository.deleteAll(); // Serve para limpar a coleção no mongodb
 		
-	Cadastro c1 = new Cadastro(null,"Tarzan","O rei da floresta",123, 5);
-	Cadastro c2 = new Cadastro(null,"Simba","O Leao brabo ",123,5);
+	//Cadastro c1 = new Cadastro(null,"Tarzan","O rei da floresta",123, 5);
+	//Cadastro c2 = new Cadastro(null,"Simba","O Leao brabo ",123,5);
 	
-	cadastroRepository.saveAll(Arrays.asList(c1,c2)); // Salva as instanciações no banco de dados.
+	//cadastroRepository.saveAll(Arrays.asList(c1,c2)); // Salva as instanciações no banco de dados.
 	
 	}
 
