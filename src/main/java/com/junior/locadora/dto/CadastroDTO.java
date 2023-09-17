@@ -53,6 +53,15 @@ public class CadastroDTO implements Serializable {
 		descricao=this.descricao;
 	}
 	
+	
+	public double getDuracao() {
+		return duracao;
+	}
+
+	public void setDuracao(double duracao) {
+		this.duracao = duracao;
+	}
+
 	public int getIdademin() {
 		return idademin;
 	}

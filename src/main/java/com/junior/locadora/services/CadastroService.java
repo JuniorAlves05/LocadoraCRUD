@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.junior.locadora.domain.Cadastro;
+import com.junior.locadora.dto.CadastroDTO;
 import com.junior.locadora.repository.CadastroRepository;
 import com.junior.locadora.services.exception.ObjectNotFoundException;
 
@@ -41,7 +42,16 @@ import com.junior.locadora.services.exception.ObjectNotFoundException;
             }
             return cadastroOptional.get();
         }
+        
+        public Cadastro insert ( Cadastro obj) {
+        	return repo.insert(obj);
+        }
 
+        public Cadastro fromDTO ( CadastroDTO objDto) {
+        	return new Cadastro (objDto.getId(),objDto.getNome(),objDto.getDescricao(),objDto.getDuracao(),objDto.getIdademin());
+        	
+        	
+        }
     }
 
 
