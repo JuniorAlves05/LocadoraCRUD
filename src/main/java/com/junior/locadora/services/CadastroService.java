@@ -51,9 +51,33 @@ import com.junior.locadora.services.exception.ObjectNotFoundException;
             Cadastro cadastro = findById(id); // Primeiro, encontre o objeto pelo ID
             repo.delete(cadastro); // Agora, delete o objeto encontrado
         }
+        
+        public Cadastro update(Cadastro obj) {
+            Optional<Cadastro> optionalCadastro = repo.findById(obj.getId());
+            
+            if (optionalCadastro.isEmpty()) {
+                throw new ObjectNotFoundException("Cadastro não encontrado");
+            }
+            
+            Cadastro existingCadastro = optionalCadastro.get();
+            
+            updateData(existingCadastro, obj);
+            
+            return repo.save(existingCadastro);
+        }
 
 
-        public Cadastro fromDTO ( CadastroDTO objDto) {
+
+        private void updateData(Cadastro newObj, Cadastro obj) {
+        	newObj.setNome(obj.getNome());
+        	newObj.setDescricao(obj.getDescricao());
+        	newObj.setDuracao(obj.getDuracao());
+        	newObj.setIdademin(obj.getIdademin());
+        	
+			
+		}
+
+		public Cadastro fromDTO ( CadastroDTO objDto) {
         	return new Cadastro (objDto.getId(),objDto.getNome(),objDto.getDescricao(),objDto.getDuracao(),objDto.getIdademin());
         	
         	
