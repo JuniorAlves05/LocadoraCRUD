@@ -46,6 +46,12 @@ import com.junior.locadora.services.exception.ObjectNotFoundException;
         public Cadastro insert ( Cadastro obj) {
         	return repo.insert(obj);
         }
+        
+        public void delete(String id) {
+            Cadastro cadastro = findById(id); // Primeiro, encontre o objeto pelo ID
+            repo.delete(cadastro); // Agora, delete o objeto encontrado
+        }
+
 
         public Cadastro fromDTO ( CadastroDTO objDto) {
         	return new Cadastro (objDto.getId(),objDto.getNome(),objDto.getDescricao(),objDto.getDuracao(),objDto.getIdademin());
