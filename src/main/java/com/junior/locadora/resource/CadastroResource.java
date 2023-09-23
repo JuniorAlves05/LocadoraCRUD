@@ -20,54 +20,50 @@ import com.junior.locadora.domain.Cadastro;
 import com.junior.locadora.dto.CadastroDTO;
 import com.junior.locadora.services.CadastroService;
 
-@RestController  // Informando que a classe é um recurso Rest
-@RequestMapping(value="/cadastro") // Caminho da requisicao
+@RestController
+@RequestMapping(value = "/cadastro")
 public class CadastroResource {
-	
-	@Autowired
-	private CadastroService service; // Injetando o service
-	
-	
-	@GetMapping // Serve para informar o caminho cadastro
-	public ResponseEntity <List<CadastroDTO>> findAll(){ // findAll >> Retorne todos
-		List < Cadastro> list = service.findAll(); // Criando uma nova lista
-		//Conversao da lista original para dto
-		List <CadastroDTO>listDto =list.stream() .map ( x-> new CadastroDTO(x)).collect(Collectors.toList());
-		return ResponseEntity.ok().body(listDto); 
-		
-		}
-	@RequestMapping(value="/{id}")
-	public ResponseEntity <CadastroDTO> findbyId(@PathVariable String id){ // O @PathVariable serve para mapear um id 
-		Cadastro obj = service.findById(id);
-		return ResponseEntity.ok().body(new CadastroDTO(obj));
-	}
 
-	@PostMapping
-	public ResponseEntity<Void> insert(@RequestBody CadastroDTO objDto) { // Removi o ponto após "insert" e corrigi o @RequestBody
-	    Cadastro obj = service.fromDTO(objDto); // Conversão de objDto para obj
-	    obj = service.insert(obj); // Inserindo no banco de dados
+    @Autowired
+    private CadastroService service;
 
-	    URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
-	            .path("/{id}")
-	            .buildAndExpand(obj.getId())
-	            .toUri();
-	            
-	    return ResponseEntity.created(uri).build(); // Resposta vazia com o código 201 e a localização com o novo recurso criado
-	}
-	
-	@RequestMapping(value="/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity <Void> delete (@PathVariable String id){ // O @PathVariable serve para mapear um id 
-		service.delete(id);
-		return ResponseEntity.noContent().build();
+    @GetMapping
+    public ResponseEntity<List<CadastroDTO>> findAll() {
+        List<Cadastro> list = service.findAll();
+        List<CadastroDTO> listDto = list.stream()
+                .map(x -> new CadastroDTO(x.getId(), x.getNome(), x.getDescricao(), x.getDuracao(), x.getIdademin(),
+                        x.getDataHoraCadastro()))
+                .collect(Collectors.toList());
+        return ResponseEntity.ok().body(listDto);
+    }
 
-	}
-	
-	@RequestMapping(value="/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<Void> update (@RequestBody CadastroDTO objDto , @PathVariable String id) { // Removi o ponto após "insert" e corrigi o @RequestBody
-	    Cadastro obj = service.fromDTO(objDto); // Conversão de objDto para obj
-	    obj.setId(id);
-	    obj = service.update(obj);
-	    return ResponseEntity.noContent().build();	    
-	}
-	
+    @RequestMapping(value = "/{id}")
+    public ResponseEntity<CadastroDTO> findById(@PathVariable String id) {
+        Cadastro obj = service.findById(id);
+        CadastroDTO dto = new CadastroDTO(obj.getId(), obj.getNome(), obj.getDescricao(), obj.getDuracao(),
+                obj.getIdademin(), obj.getDataHoraCadastro());
+        return ResponseEntity.ok().body(dto);
+    }
+
+    @PostMapping
+    public ResponseEntity<Void> insert(@RequestBody CadastroDTO objDto) {
+        Cadastro obj = service.fromDTO(objDto);
+        obj = service.insert(obj);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
+        return ResponseEntity.created(uri).build();
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<Void> delete(@PathVariable String id) {
+        service.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    public ResponseEntity<Void> update(@RequestBody CadastroDTO objDto, @PathVariable String id) {
+        Cadastro obj = service.fromDTO(objDto);
+        obj.setId(id);
+        obj = service.update(obj);
+        return ResponseEntity.noContent().build();
+    }
 }
