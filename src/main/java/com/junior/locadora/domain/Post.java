@@ -15,8 +15,7 @@ public class Post implements Serializable{
 	@Id
 	private String id ;
 	private Date date;
-	private String titulo;
-	private String Corpo;
+	private String comentario;
 	private User author;
 	private Cadastro filme;
 	
@@ -24,12 +23,11 @@ public class Post implements Serializable{
 		
 	}
 
-	public Post(String id, Date date, String titulo, String corpo, User author, Cadastro filme) {
+	public Post(String id, Date date, String comentario, User author, Cadastro filme) {
 		super();
 		this.id = id;
 		this.date = date;
-		this.titulo = titulo;
-		Corpo = corpo;
+		this.comentario = comentario;
 		this.author= author;
 		this.filme=filme;
 		
@@ -52,19 +50,11 @@ public class Post implements Serializable{
 	}
 
 	public String getTitulo() {
-		return titulo;
+		return comentario;
 	}
 
-	public void setTitulo(String titulo) {
-		this.titulo = titulo;
-	}
-
-	public String getCorpo() {
-		return Corpo;
-	}
-
-	public void setCorpo(String corpo) {
-		Corpo = corpo;
+	public void setTitulo(String comentario) {
+		this.comentario = comentario;
 	}
 	
 	public User getAuthor() {
