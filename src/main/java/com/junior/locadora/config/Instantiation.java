@@ -31,10 +31,12 @@ public class Instantiation implements CommandLineRunner {
     public void run(String... args) throws Exception {
         // Limpar a coleção no MongoDB (opcional)
        //  cadastroRepository.deleteAll();
-      //  userRepository.deleteAll();
+       
+    	userRepository.deleteAll();
+    	postRepository.deleteAll();
+    	cadastroRepository.deleteAll();
 
-        // Inserir dados de exemplo
-    	
+        
     	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     	sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
     	
