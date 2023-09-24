@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import com.junior.locadora.domain.Cadastro;
 import com.junior.locadora.domain.Post;
 import com.junior.locadora.domain.User;
+import com.junior.locadora.dto.AuthorDTO;
 import com.junior.locadora.repository.CadastroRepository;
 import com.junior.locadora.repository.PostRepository;
 import com.junior.locadora.repository.UserRepository;
@@ -46,10 +47,12 @@ public class Instantiation implements CommandLineRunner {
         User joao = new User(null, "Joao", 10,"joao@gmail.com", null); 
         User maria = new User(null," Maria",15,"maria@gmail.com",null);
         
-        Post post1 = new Post(null, sdf.parse("21/03/2018"),"Esse filme e mto bom",joao,c1);
-        Post post2 = new Post(null, sdf.parse("21/03/2018"),"Esse filme e mto bom",maria,c2);
-         
         userRepository.saveAll(Arrays.asList(joao,maria));
+        
+        Post post1 = new Post(null, sdf.parse("21/03/2018"),"Esse filme e mto bom",new AuthorDTO(joao),c1);
+        Post post2 = new Post(null, sdf.parse("21/03/2018"),"Esse filme e mto bom",new AuthorDTO(maria),c2);
+         
+       
         postRepository.saveAll(Arrays.asList(post1,post2));
         cadastroRepository.saveAll(Arrays.asList(c1,c2));
         
